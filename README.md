@@ -1,4 +1,4 @@
-Copyright 2023, Seth Enoka <https://sethenoka.com/>.
+Copyright 2023, Seth Enoka <https://sethenoka.com/>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,13 @@ system and network administration, as well as cybersecurity. More information
 can be found here:
 
 Bash Cheat Sheet: https://github.com/RehanSaeed/Bash-Cheat-Sheet
+
 Bash Reference Manual: https://www.gnu.org/software/bash/manual/bash.html
+
 Linux Command Line Tutorial: https://www.learnshell.org/
 
 It's modular nature is such that anyone can easily add their own quiz
 questions to extend and expand their capabilities.
 
 Usage:
-  python3 linux_help.py
+  python3 linux_helper.py
