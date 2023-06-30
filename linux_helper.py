@@ -1,7 +1,6 @@
 import importlib, os
 
 def print_menu():
-    os.system('clear')
     print("Available Modules:")
     print("1. Terminal Navigation")
     print("2. Working with Directories and Files")
@@ -17,7 +16,9 @@ def run_module(module_name):
         module_path = os.path.join("modules", module_name + ".py")
         module_name = "modules." + module_name
         module = importlib.import_module(module_name)
+        os.system('clear')
         module.run()
+        os.system('clear')
     except ModuleNotFoundError:
         print("Error: Module not found.")
     except AttributeError:
@@ -25,6 +26,7 @@ def run_module(module_name):
 
 def main():
     # Introduction
+    os.system('clear')
     print("Welcome to the Bash Basics tutorial!")
     print("In this tutorial, you will learn the basics of using the Bash terminal.")
     print("Let's get started!\n")
@@ -35,7 +37,7 @@ def main():
 
         # Get user's choice
         choice = input("Enter your choice (1-8): ")
-        
+
         if choice == "1":
             run_module("navigation")    # navigating the terminal
         elif choice == "2":
