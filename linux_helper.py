@@ -40,7 +40,7 @@ def print_menu() -> None:
 
 def print_goodbye() -> None:
     print("Exiting the program.")
-    print("If you would like to learn more, please visit the following links:\n")
+    print("If you'd like to learn more, please visit the following links:\n")
     for link in LINKS:
         print(f"- {link}")
     print("Goodbye!")
@@ -67,7 +67,7 @@ def run_module(entry: ModuleEntry, *, return_to_menu: bool = True) -> None:
     run = getattr(module, "run", None)
 
     if not callable(run):
-        raise TypeError(f"modules.{entry.module_name} does not define a callable run()")
+        raise TypeError(f"modules.{entry.module_name} doesn't define a callable run()")
 
     clear_screen()
     run()
@@ -104,7 +104,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     clear_screen()
     print("Welcome to the Bash Basics tutorial!")
-    print("In this tutorial, you will learn the basics of using the Bash terminal.")
+    print("In this tutorial, you'll learn the basics of using the Bash terminal.")
     print("Let's get started!\n")
 
     while True:
