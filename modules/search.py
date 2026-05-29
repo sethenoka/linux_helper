@@ -1,322 +1,84 @@
-import os
+from modules.quiz import QuizQuestion, run_quiz
+
+
+TITLE = "Searching the Filesystem Using Terminal"
+
+QUESTIONS = (
+    QuizQuestion(
+        prompt="Find the executable file for the command wget.",
+        accepted_answers=("which wget", "command -v wget"),
+        hints=("which finds executables in your PATH.", "command -v is a portable shell builtin."),
+    ),
+    QuizQuestion(
+        prompt="Find a file named foo.txt in the /opt directory using the find command.",
+        accepted_answers=(
+            "find /opt -iname foo.txt",
+            "find /opt/ -iname foo.txt",
+            "find /opt -name foo.txt",
+            "find /opt/ -name foo.txt",
+        ),
+        hints=("-iname performs a case-insensitive search.", "find <path> -iname <name>"),
+    ),
+    QuizQuestion(
+        prompt="Find all .txt files, not directories, in the /opt directory using find.",
+        accepted_answers=(
+            'find /opt -type f -iname "*.txt"',
+            'find /opt/ -type f -iname "*.txt"',
+            "find /opt -type f -iname *.txt",
+            "find /opt/ -type f -iname *.txt",
+            'find /opt -type f -name "*.txt"',
+            'find /opt/ -type f -name "*.txt"',
+        ),
+        hints=("find has a -type argument.", 'Quote "*.txt" so the shell does not expand it first.'),
+    ),
+    QuizQuestion(
+        prompt="Find all directories, not files, named foo in the /opt directory using find.",
+        accepted_answers=(
+            "find /opt -type d -iname foo",
+            "find /opt/ -type d -iname foo",
+            "find /opt -type d -name foo",
+            "find /opt/ -type d -name foo",
+        ),
+        hints=("find has a -type argument.", "Use -type d to search for directories."),
+    ),
+    QuizQuestion(
+        prompt="Search for the word foo in the file bar.txt using grep.",
+        accepted_answers=("grep foo bar.txt",),
+        hints=("grep takes a pattern and one or more files.",),
+    ),
+    QuizQuestion(
+        prompt="Color instances of foo in the file bar.txt using grep.",
+        accepted_answers=("grep --color=always foo bar.txt", "grep --color foo bar.txt"),
+        hints=("grep takes a pattern and one or more files.", "--color highlights matching text."),
+    ),
+    QuizQuestion(
+        prompt="Show only lines not containing foo in the file bar.txt using grep.",
+        accepted_answers=("grep -v foo bar.txt",),
+        hints=("grep takes a pattern and one or more files.", "-v inverts the match."),
+    ),
+    QuizQuestion(
+        prompt="Perform a case-insensitive search for foo in the file bar.txt using grep.",
+        accepted_answers=("grep -i foo bar.txt",),
+        hints=("grep takes a pattern and one or more files.", "-i makes matching case-insensitive."),
+    ),
+    QuizQuestion(
+        prompt="Return five lines of context around lines containing foo in bar.txt using grep.",
+        accepted_answers=("grep -C 5 foo bar.txt", "grep -C5 foo bar.txt"),
+        hints=("grep takes a pattern and one or more files.", "-C adds context around matching lines."),
+    ),
+    QuizQuestion(
+        prompt="Search for foo or bar in the file bar.txt using grep.",
+        accepted_answers=(
+            "grep -E 'foo|bar' bar.txt",
+            'grep -E "foo|bar" bar.txt',
+            "egrep 'foo|bar' bar.txt",
+            'egrep "foo|bar" bar.txt',
+        ),
+        hints=("Basic grep treats | literally unless extended regex is enabled.", "-E enables extended regular expressions."),
+        explanation="With basic grep, 'foo|bar' is a literal pattern. grep -E makes | mean OR.",
+    ),
+)
+
 
 def run():
-    print("Searching the Filesystem Using Terminal")
-    print("==================\n")
-
-    # Quiz 1
-    os.system('clear')
-    print("Q1: Find the file for the command wget.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: which is a command that will find binaries on Linux.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: locate is a command that uses an index and is fast for finding files.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "which wget":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "locate wget":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 2
-    print("Q2: Find a file named foo.txt in the /opt/ directory using the find command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: -iname can be used to perform a case insensitive search.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: find <path> -iname <keyword>.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "find /opt/ -iname foo.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -iname foo.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -name foo.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt/ -name foo.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 3
-    print("Q3: Find all .txt files (not directories) in the /opt/ directory using the find command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: find has a -type argument.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: find <path> -type f -iname *.txt.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "find /opt/ -type f -iname *.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -type f -iname *.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -type f -name *.txt":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt/ -type f -name *.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 4
-    print("Q4: Find all directories (not files) named foo in the /opt/ directory using the find command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: find has a -type argument.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: find <path> -type d -iname foo.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "find /opt/ -type d -iname foo":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -type d -iname foo":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt -type d -name foo":
-            print("Correct!\n")
-            break
-        elif answer.strip() == "find /opt/ -type d -name foo":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 5
-    print("Q5: Search for the word foo in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("No more hints available.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep foo bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 6
-    print("Q6: Colour instances of foo in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: --color=always will highlight the matches when using grep.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep --color=always foo bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 7
-    print("Q7: Show only lines not containing foo in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: -v does an inverse or exclusive search in grep.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep -v foo bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 8
-    print("Q8: Perform a case insensitive search for foo in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: -i performs a case insensitive search in grep.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep -i foo bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 9
-    print("Q9: Return five lines of context around lines containing foo in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: -C provides additional lines of context in grep.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep -C 5 foo bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Quiz 10
-    print("Q10: Search for foo or bar in the file bar.txt using the grep command.")
-    hint_given = 0  # Track the number of hints given
-
-    while True:
-        if hint_given <2:
-            answer = input("Enter your answer ('hint' for a hint, 'skip' to skip): ")
-        else:
-            answer = input("Enter your answer ('skip' to skip): ")
-
-        if answer.strip().lower() == "hint":
-            if hint_given < 1:
-                print("Hint 1: grep takes two arguments: keyword and file.\n")
-                hint_given += 1
-            elif hint_given < 2:
-                print("Hint 2: 'a|b' is used to indicate an or search in grep.\n")
-                hint_given += 1
-            else:
-                print("No more hints available.\n")
-        elif answer.strip() == "skip":
-            print("Skipped!\n")
-            break
-        elif answer.strip() == "grep 'foo|bar' bar.txt":
-            print("Correct!\n")
-            break
-        else:
-            print("Incorrect. Please try again.\n")
-
-    # Feedback
-    print("Feedback")
-    print("========\n")
-    print("Congratulations! You have completed the Searching the Filesystem Using Terminal tutorial.")
-    input("Press any key to continue.")
+    run_quiz(TITLE, QUESTIONS)

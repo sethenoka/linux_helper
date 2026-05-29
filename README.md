@@ -1,38 +1,78 @@
-Copyright 2023, Seth Enoka <https://sethenoka.com/>
+# Python Bash Helper
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Python Bash Helper is an interactive terminal quiz for learning common Linux and Bash commands used in system administration, networking, and security workflows.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+## Requirements
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+- Python 3.9 or newer
+- A terminal environment for running the quiz
+- A Linux or Unix-like shell is recommended if you want to practice the commands exactly as written
 
-Python Bash Helper
+## Usage
 
-This script and it's related modules are designed to assist those unfamiliar
-with Bash to learn and remember the basic terminal commands useful for 
-system and network administration, as well as cybersecurity. More information
-can be found here:
+Run the interactive menu:
 
-Bash Cheat Sheet: https://github.com/RehanSaeed/Bash-Cheat-Sheet
+```bash
+python3 linux_helper.py
+```
 
-Bash Reference Manual: https://www.gnu.org/software/bash/manual/bash.html
+List available modules:
 
-Linux Command Line Tutorial: https://www.learnshell.org/
+```bash
+python3 linux_helper.py --list
+```
 
-It's modular nature is such that anyone can easily add their own quiz
-questions to extend and expand their capabilities.
+Run a single module directly:
 
-Usage:
-  python3 linux_helper.py
+```bash
+python3 linux_helper.py search
+python3 linux_helper.py packages
+```
+
+Available module keys are:
+
+- `navigation`
+- `directories`
+- `search`
+- `usage`
+- `packages`
+- `process`
+- `misc`
+
+## Adding Questions
+
+Each topic module defines a `QUESTIONS` tuple of `QuizQuestion` objects and calls the shared runner in `modules/quiz.py`. Add new content by adding another `QuizQuestion` to the relevant module:
+
+```python
+QuizQuestion(
+    prompt="Print the current directory path.",
+    accepted_answers=("pwd",),
+    hints=("This command stands for 'print working directory'.",),
+)
+```
+
+Use multiple `accepted_answers` for common valid variations. The runner automatically handles `hint`, `skip`, whitespace normalisation, scoring, and optional `sudo` prefixes.
+
+## Testing
+
+Run the test suite:
+
+```bash
+python3 -m unittest
+```
+
+Run a syntax check:
+
+```bash
+python3 -m py_compile linux_helper.py modules/*.py tests/*.py
+```
+
+## Resources
+
+- Bash Cheat Sheet: https://github.com/RehanSaeed/Bash-Cheat-Sheet
+- Bash Reference Manual: https://www.gnu.org/software/bash/manual/bash.html
+- Linux Command Line Tutorial: https://www.learnshell.org/
+
+## License
+
+MIT. See [LICENSE](LICENSE).
